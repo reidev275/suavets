@@ -1,0 +1,5 @@
+dist/
+*.swp
+*.js
+
+node_modules/

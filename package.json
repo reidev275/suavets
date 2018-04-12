@@ -1,0 +1,15 @@
+{
+  "name": "suavets",
+  "version": "1.0.0",
+  "description": "Monoidal web framework",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Reid Evans",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/reidev275/suaveTs/issues"
+  },
+  "homepage": "https://github.com/reidev275/suaveTs#readme",
+  "dependencies": {}
+}
