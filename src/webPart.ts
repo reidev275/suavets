@@ -1,6 +1,6 @@
-import { Maybe, Just, sequencePromise, join } from "./maybe";
-import { Semigroup } from "./semigroup";
-import { Monoid } from "./monoid";
+import { Maybe, Just, sequencePromise, join } from "./prelude/maybe";
+import { Semigroup } from "./prelude/semigroup";
+import { Monoid } from "./prelude/monoid";
 
 export interface WebPart<A> {
   run(a: A): Promise<Maybe<A>>;
