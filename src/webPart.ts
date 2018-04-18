@@ -23,3 +23,26 @@ export const getMonoid = <A>(): Monoid<WebPart<A>> => ({
     run: (a: A) => Promise.resolve(new Just(a))
   }
 });
+
+const pure = <A>(fn: (a: A) => Promise<Maybe<A>>): WebPart<A> => ({
+  run: fn
+});
+
+export const choose = <A>(options: WebPart<A>[]): WebPart<A> => ({
+  run: (arg: A) => {
+    if (options.length === 0) {
+      return getMonoid<A>().empty.run(arg);
+    }
+    const [h, ...t] = options;
+    return h.run(arg).then((x: Maybe<A>) =>
+      x.match(
+        () => {
+          const wpa: WebPart<A> = choose(t);
+          const pma: Promise<Maybe<A>> = wpa.run(arg);
+          return pma;
+        },
+        (a: A) => h.run(arg)
+      )
+    );
+  }
+});
