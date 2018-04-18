@@ -11,5 +11,10 @@
     "url": "https://github.com/reidev275/suaveTs/issues"
   },
   "homepage": "https://github.com/reidev275/suaveTs#readme",
-  "dependencies": {}
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "@types/express": "^4.11.1"
+  }
 }
