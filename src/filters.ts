@@ -13,3 +13,10 @@ export const GET = method("GET");
 export const PUT = method("PUT");
 export const POST = method("POST");
 export const DELETE = method("DELETE");
+
+export const path = (path: string): WebPart<HttpContext> => ({
+  run: ctx =>
+    ctx.req.path === path
+      ? Promise.resolve(new Just(ctx))
+      : Promise.resolve(new Nothing())
+});
