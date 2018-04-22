@@ -1,4 +1,4 @@
-import { Maybe, Just, sequencePromise, join } from "./prelude/maybe";
+import { Maybe, Just, Nothing, sequencePromise, join } from "./prelude/maybe";
 import { Semigroup } from "./prelude/semigroup";
 import { Monoid } from "./prelude/monoid";
 
@@ -24,9 +24,9 @@ export const getMonoid = <A>(): Monoid<WebPart<A>> => ({
   }
 });
 
-const pure = <A>(fn: (a: A) => Promise<Maybe<A>>): WebPart<A> => ({
-  run: fn
-});
+export const pure = <A>(a: A) => Promise.resolve(new Just(a));
+export const fail = <A>(): Promise<Maybe<A>> =>
+  Promise.resolve(new Nothing<A>());
 
 export const choose = <A>(options: WebPart<A>[]): WebPart<A> => ({
   run: (arg: A) => {
