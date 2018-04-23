@@ -47,7 +47,7 @@ export const choose = <A>(options: WebPart<A>[]): WebPart<A> => ({
             const pma: Promise<Maybe<A>> = wpa.run(arg);
             return pma;
           },
-          (a: A) => h.run(arg)
+          (a: A) => pure(a)
         )
       )
       .catch(ex => {

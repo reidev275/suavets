@@ -13,5 +13,5 @@ export const run = (wp: WebPart<HttpContext>) => async (
 ) =>
   wp
     .run({ req, res })
-    .then(maybe => maybe.match(() => next(), ctx => res.end()))
+    .then(maybe => next())
     .catch(ex => res.status(500).send(ex));
