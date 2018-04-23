@@ -7,6 +7,8 @@ import { GET, POST, path } from "../src/filters";
 const server = express();
 server.listen(3000, () => console.log("running 4-choose.ts"));
 
+//choose uses the first WebPart to match
+
 //respond to Get requests to /hello with 200 "hello world"
 //respond to Post requests to /hello with 200 "posted world"
 const app = pipe(

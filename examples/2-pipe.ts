@@ -7,6 +7,8 @@ import { GET } from "../src/filters";
 const server = express();
 server.listen(3000, () => console.log("running 2-pipe.ts"));
 
+//pipe combines WebParts together to make a single WebPart
+//
 //respond to GET requests with 200 "hello world"
 const app = pipe(GET, OK("hello world"));
 
