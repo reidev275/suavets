@@ -10,7 +10,8 @@ export const run = (wp: WebPart<HttpContext>) => async (
   req: Express.Request,
   res: Express.Response,
   next: Express.NextFunction
-) => {
-  const maybe = await wp.run({ req, res });
-  maybe.match(() => next(), ctx => res.end());
-};
+) =>
+  wp
+    .run({ req, res })
+    .then(maybe => maybe.match(() => next(), ctx => res.end()))
+    .catch(ex => res.status(500).send(ex));

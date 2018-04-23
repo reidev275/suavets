@@ -21,7 +21,7 @@ export const getSemigroup = <A>(): Semigroup<WebPart<A>> => ({
 export const getMonoid = <A>(): Monoid<WebPart<A>> => ({
   ...getSemigroup<A>(),
   empty: {
-    run: (a: A) => Promise.resolve(new Just(a))
+    run: (a: A) => pure(a)
   }
 });
 
@@ -38,15 +38,21 @@ export const choose = <A>(options: WebPart<A>[]): WebPart<A> => ({
       return getMonoid<A>().empty.run(arg);
     }
     const [h, ...t] = options;
-    return h.run(arg).then((x: Maybe<A>) =>
-      x.match(
-        () => {
-          const wpa: WebPart<A> = choose(t);
-          const pma: Promise<Maybe<A>> = wpa.run(arg);
-          return pma;
-        },
-        (a: A) => h.run(arg)
+    return h
+      .run(arg)
+      .then((x: Maybe<A>) =>
+        x.match(
+          () => {
+            const wpa: WebPart<A> = choose(t);
+            const pma: Promise<Maybe<A>> = wpa.run(arg);
+            return pma;
+          },
+          (a: A) => h.run(arg)
+        )
       )
-    );
+      .catch(ex => {
+        console.log(ex);
+        return getMonoid<A>().empty.run(arg);
+      });
   }
 });
