@@ -1,6 +1,7 @@
 import { Maybe, Just, Nothing, sequencePromise, join } from "./prelude/maybe";
 import { Semigroup } from "./prelude/semigroup";
 import { Monoid } from "./prelude/monoid";
+import { Foldable, fold } from "./prelude/foldable";
 
 export interface WebPart<A> {
   run(a: A): Promise<Maybe<A>>;
@@ -23,6 +24,9 @@ export const getMonoid = <A>(): Monoid<WebPart<A>> => ({
     run: (a: A) => Promise.resolve(new Just(a))
   }
 });
+
+export const pipe = <A>(as: Foldable<WebPart<A>>): WebPart<A> =>
+  fold(getMonoid<A>(), as);
 
 export const pure = <A>(a: A) => Promise.resolve(new Just(a));
 export const fail = <A>(): Promise<Maybe<A>> =>
