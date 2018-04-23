@@ -25,14 +25,14 @@ export const getMonoid = <A>(): Monoid<WebPart<A>> => ({
   }
 });
 
-export const pipe = <A>(as: Foldable<WebPart<A>>): WebPart<A> =>
+export const pipe = <A>(...as: WebPart<A>[]): WebPart<A> =>
   fold(getMonoid<A>(), as);
 
 export const pure = <A>(a: A) => Promise.resolve(new Just(a));
 export const fail = <A>(): Promise<Maybe<A>> =>
   Promise.resolve(new Nothing<A>());
 
-export const choose = <A>(options: WebPart<A>[]): WebPart<A> => ({
+export const choose = <A>(...options: WebPart<A>[]): WebPart<A> => ({
   run: (arg: A) => {
     if (options.length === 0) {
       return getMonoid<A>().empty.run(arg);

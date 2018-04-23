@@ -9,15 +9,15 @@ server.listen(3000, () => console.log("running 4-choose.ts"));
 
 //respond to Get requests to /hello with 200 "hello world"
 //respond to Post requests to /hello with 200 "posted world"
-const app = pipe([
+const app = pipe(
   // /hello route
   path("/hello"),
-  choose([
+  choose(
     //Post handler
-    pipe([POST, OK("posted world")]),
+    pipe(POST, OK("posted world")),
     //Get handler
-    pipe([GET, OK("hello world")])
-  ])
-]);
+    pipe(GET, OK("hello world"))
+  )
+);
 
 server.use(run(app));
