@@ -11,9 +11,9 @@ export const getSemigroup = <A>(): Semigroup<WebPart<A>> => ({
   append: (x, y) => ({
     run: async (a: A) => {
       const maybeA: Maybe<A> = await x.run(a);
-      const foo: Maybe<Promise<Maybe<A>>> = maybeA.map(y.run);
-      const bar: Maybe<Maybe<A>> = await sequencePromise(foo);
-      return join(bar);
+      const mpma: Maybe<Promise<Maybe<A>>> = maybeA.map(y.run);
+      const mma: Maybe<Maybe<A>> = await sequencePromise(mpma);
+      return join(mma);
     }
   })
 });
