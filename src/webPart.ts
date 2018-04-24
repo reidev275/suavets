@@ -43,7 +43,7 @@ export const choose = <A>(...options: WebPart<A>[]): WebPart<A> => ({
       .then((x: Maybe<A>) =>
         x.match(
           () => {
-            const wpa: WebPart<A> = choose(t);
+            const wpa: WebPart<A> = choose(...t);
             const pma: Promise<Maybe<A>> = wpa.run(arg);
             return pma;
           },
