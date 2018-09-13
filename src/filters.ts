@@ -24,3 +24,9 @@ export const request = (
 ): WebPart<HttpContext> => ({
   run: ctx => fn(ctx).run(ctx)
 });
+
+export const async = <A>(
+  fn: Fn<HttpContext, Promise<WebPart<HttpContext>>>
+): WebPart<HttpContext> => ({
+  run: ctx => fn(ctx).then(x => x.run(ctx))
+});
