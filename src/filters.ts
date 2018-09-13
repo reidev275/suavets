@@ -18,3 +18,9 @@ export const DELETE = method("DELETE");
 
 export const path = (path: string): WebPart<HttpContext> =>
   filter(x => x.req.path === path);
+
+export const request = (
+  fn: Fn<HttpContext, WebPart<HttpContext>>
+): WebPart<HttpContext> => ({
+  run: ctx => fn(ctx).run(ctx)
+});

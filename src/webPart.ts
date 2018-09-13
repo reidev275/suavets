@@ -2,6 +2,7 @@ import { Maybe, Just, Nothing, sequencePromise, join } from "./prelude/maybe";
 import { Semigroup } from "./prelude/semigroup";
 import { Monoid } from "./prelude/monoid";
 import { Foldable, fold } from "./prelude/foldable";
+import { Fn } from "./prelude/common";
 
 export interface WebPart<A> {
   run(a: A): Promise<Maybe<A>>;
