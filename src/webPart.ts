@@ -1,4 +1,11 @@
-import { Maybe, Just, Nothing, sequencePromise, join } from "./prelude/maybe";
+import {
+  Maybe,
+  Just,
+  Nothing,
+  sequencePromise,
+  traversePromise,
+  join
+} from "./prelude/maybe";
 import { Semigroup } from "./prelude/semigroup";
 import { Monoid } from "./prelude/monoid";
 import { Foldable, fold } from "./prelude/foldable";
@@ -12,9 +19,7 @@ export const getSemigroup = <A>(): Semigroup<WebPart<A>> => ({
   append: (x, y) => ({
     run: async (a: A) => {
       const maybeA: Maybe<A> = await x.run(a);
-      const mpma: Maybe<Promise<Maybe<A>>> = maybeA.map(y.run);
-      const mma: Maybe<Maybe<A>> = await sequencePromise(mpma);
-      return join(mma);
+      return await traversePromise(y.run, maybeA);
     }
   })
 });

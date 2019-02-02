@@ -48,3 +48,10 @@ export function sequencePromise<A>(
     j => j.then(a => new Just(a))
   );
 }
+
+export function traversePromise<A, B>(
+  fn: Fn<A, Promise<Maybe<B>>>,
+  maybe: Maybe<A>
+): Promise<Maybe<B>> {
+  return maybe.match(() => Promise.resolve(new Nothing<B>()), fn);
+}
